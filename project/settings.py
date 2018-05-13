@@ -78,7 +78,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MASTER_URL = 'http://localhost:8001'
-DATA_DIR = '/var/cdn/assets/'
+DATA_DIR = '/var/cdn/asset/'
 
 
 try:

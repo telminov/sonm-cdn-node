@@ -2,14 +2,10 @@ FROM ubuntu:18.04
 EXPOSE 8080
 
 RUN apt-get clean && apt-get update && apt-get install -y \
-    wget vim \
-    libpq-dev \
     supervisor \
     python3-dev \
     locales \
-    python3-pip npm \
-    qrencode \
-    postgresql-client pgtop \
+    python3-pip \
     nginx
 
 RUN locale-gen ru_RU.UTF-8
@@ -24,7 +20,7 @@ RUN pip3 install django==2.0.2 \
 
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /var/cdn/assets /var/cdn/logs
+RUN mkdir -p /var/cdn/asset /var/cdn/logs
 
 COPY . /opt/cdn_node
 WORKDIR /opt/cdn_node
