@@ -1,0 +1,19 @@
+# docker-compose run --name cdn_node -d  node
+version: "3"
+
+services:
+  node:
+    image: nginx
+
+    volumes:
+     - /Users/des/cdn:/var/cdn
+     - .:/etc/cdn-node/
+
+    ports:
+     - "8000:8000"
+     - "8001:8001"
+
+    environment:
+     - CDN_NODE=node-1
+
+    command: sh /etc/cdn-node/entrypoint.sh
