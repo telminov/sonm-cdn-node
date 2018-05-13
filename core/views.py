@@ -1,7 +1,5 @@
-import shutil
+import os
 import requests
-import pathlib
-
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -10,33 +8,55 @@ from rest_framework.views import APIView
 
 class DownloadFromMaster(APIView):
     def get(self, *args, **kwargs):
-        path = kwargs.get('path')
-        data = b''
+        file_data = self.get_file()
         status = 404
 
+        if file_data:
+            status = 200
+            self.save_file(file_data)
+
+        return HttpResponse(file_data, status=status)
+
+    def get_file(self):
+        url = self.get_file_url()
+        file_data = b''
+
         try:
-            response = requests.get(settings.MASTER_URL + '/' + path, stream=True)
+            response = requests.get(url, stream=True)
             if response.status_code == 200:
-                file_path = settings.DATA_DIR + path
-                dr = path.split('/')[:-1]
-                print(dr)
-                if dr:
-                    dr = settings.DATA_DIR + '/'.join(dr)
-                    pathlib.Path(dr).mkdir(parents=True, exist_ok=True)
-
-                with open(file_path, 'wb') as f:
-                    response.raw.decode_content = True
-                    shutil.copyfileobj(response.raw, f)
-                    status = 200
-
-                # TODO
-                with open(file_path, 'rb') as f:
-                    data = f.read()
+                response.raw.decode_content = True
+                file_data = response.raw.read()
 
         except requests.ConnectionError:
             pass
 
+        return file_data
 
-        return HttpResponse(data, status=status, content_type='image/png') # TODO
+    def save_file(self, file_data: bytes):
+        with open(self.get_file_path(), 'wb') as fl:
+            fl.write(file_data)
+
+
+    def get_file_url(self) -> str:
+        uuid = self.kwargs.get('uuid')
+        master_url = self.get_master_url()
+        url = os.path.join(master_url, 'assets', uuid)
+
+        return url
+
+    def get_file_path(self) -> str:
+        uuid = self.kwargs.get('uuid')
+        data_path = self.get_data_path()
+        file_path = os.path.join(data_path, uuid)
+
+        return file_path
+
+    @staticmethod
+    def get_master_url() -> str:
+        return settings.MASTER_URL.strip('/')
+
+    @staticmethod
+    def get_data_path() -> str:
+        return settings.DATA_DIR.strip('/')
 
 download_from_master = DownloadFromMaster.as_view()
