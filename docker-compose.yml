@@ -1,0 +1,11 @@
+# docker-compose run --name cdn_node -d cdn-node
+
+version: "2"
+
+services:
+  cdn-node:
+    build: .
+    ports:
+     - "127.0.0.1:80:8080"
+    volumes:
+      - /var/docker/sonm/cdn:/var/cdn
