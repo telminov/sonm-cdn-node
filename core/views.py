@@ -40,7 +40,7 @@ class DownloadFromMaster(APIView):
     def get_file_url(self) -> str:
         uuid = self.kwargs.get('uuid')
         master_url = self.get_master_url()
-        url = os.path.join(master_url, 'assets', uuid)
+        url = os.path.join(master_url, 'asset', uuid)
 
         return url
 
