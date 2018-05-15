@@ -69,17 +69,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-RU'
+TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
 
-MASTER_URL = 'http://localhost:8001'
-DATA_DIR = '/var/cdn/asset/'
 
+CMS_URL = 'http://cdn-cms'
+DATA_DIR = '/var/cdn/asset/'
 
 try:
     from project.local_settings import *

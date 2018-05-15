@@ -13,10 +13,10 @@ ENV LANG ru_RU.UTF-8
 ENV LANGUAGE ru_RU:ru
 ENV LC_ALL ru_RU.UTF-8
 
-RUN pip3 install django==2.0.2 \
-                 gunicorn \
-                 requests \
-                 django-rest-framework
+RUN pip3 install django==2.0.5 \
+                 gunicorn==19.8.1 \
+                 requests==2.18.4 \
+                 djangorestframework==3.8.2
 
 ENV PYTHONUNBUFFERED 1
 
