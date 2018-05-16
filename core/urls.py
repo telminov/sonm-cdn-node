@@ -1,7 +1,7 @@
-from django.conf.urls import url
+from django.urls import path
 
 from core import views
 
 urlpatterns = [
-    url(r'asset/(?P<uuid>\w+)/$', views.download_from_master),
+    path('asset/<uuid>', views.DownloadFromCMS.as_view(), name='download_from_cms'),
 ]
