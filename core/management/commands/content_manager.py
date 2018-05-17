@@ -14,8 +14,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--infinity',
-            dest='infinity',
+            '--infinitely',
+            dest='infinitely',
             action='store_true',
             help=u'Бесконечный цикл, смотрим на изменения и удаляем что надо',
         )
@@ -29,7 +29,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.sleep_time = options.get('time') or self.DEFAULT_SLEEP_TIME
 
-        if options.get('infinity'):
+        if options.get('infinitely'):
             while True:
                 self.manage()
                 time.sleep(self.sleep_time)
