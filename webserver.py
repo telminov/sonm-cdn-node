@@ -4,6 +4,9 @@ import aiofiles
 
 
 class DownloadFromCMS(web.View):
+    """
+    Прокси. Хапрашивает файл и сохранет его для nginx локально.
+    """
     url = 'http://cms.cdn.sonm.soft-way.biz/asset/%s/'
 
     async def get(self):
@@ -14,8 +17,9 @@ class DownloadFromCMS(web.View):
             async with session.get(url) as response:
                 asset_data = await response.read()
 
-        async with aiofiles.open('/data/asset/%s' % uuid, 'wb') as f:
-            await f.write(asset_data)
+        if response.status == 200:
+            async with aiofiles.open('/data/asset/%s' % uuid, 'wb') as f:
+                await f.write(asset_data)
 
         return web.Response(body=asset_data, headers=response.headers)
 

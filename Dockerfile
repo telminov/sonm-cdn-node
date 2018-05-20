@@ -14,13 +14,13 @@ WORKDIR /opt/app
 ADD requirements.txt /opt/app
 RUN pip3 install -r /opt/app/requirements.txt
 
-ADD web_server.py /opt/app
+ADD webserver.py /opt/app
+ADD clearing.py /opt/app
 
 ADD supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 ADD supervisor/prod.conf /etc/supervisor/conf.d/app.conf
 ADD nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
-VOLUME /data
 
 CMD /usr/bin/supervisord -c /etc/supervisor/supervisord.conf --nodaemon
