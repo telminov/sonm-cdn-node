@@ -1,1 +1,2 @@
 aiohttp==2.3.10
+aiofiles==0.3.2
