@@ -50,7 +50,6 @@ class Command(BaseCommand):
             message='Удаленные файлы синхронизированы'
         )
 
-
     def get_deleted_assets(self):
         response = requests.get(self.get_deleted_assets_url(), self.get_deleted_assets_params())
         assets = response.json()
