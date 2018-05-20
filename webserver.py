@@ -1,11 +1,12 @@
 from aiohttp import web
 import aiohttp
 import aiofiles
+import psutil
 
 
 class DownloadFromCMS(web.View):
     """
-    Прокси. Хапрашивает файл и сохранет его для nginx локально.
+    Прокси. Запрашивает файл из CMS и сохранет его для nginx локально.
     """
     url = 'http://cms.cdn.sonm.soft-way.biz/asset/%s/'
 
@@ -24,12 +25,23 @@ class DownloadFromCMS(web.View):
         return web.Response(body=asset_data, headers=response.headers)
 
 
+class BytesSent(web.View):
+    """
+    Объем отправленного трафика
+    """
+
+    async def get(self):
+        bytes_sent = psutil.net_io_counters().bytes_sent
+        return web.Response(text=str(bytes_sent))
+
+
 class Server:
 
     @staticmethod
     def run():
         app = web.Application()
         app.router.add_get('/asset/{uuid}', DownloadFromCMS)
+        app.router.add_get('/bytes_sent', BytesSent)
         web.run_app(app, port=8000)
 
 
