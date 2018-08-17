@@ -1,3 +1,5 @@
+# docker build -t telminov/sonm-cdn-node .
+# docker push telminov/sonm-cdn-node
 FROM ubuntu:18.04
 
 RUN apt-get clean && apt-get update && apt-get install -y wget software-properties-common
