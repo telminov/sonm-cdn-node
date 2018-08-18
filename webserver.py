@@ -1,14 +1,17 @@
+import os
 from aiohttp import web
 import aiohttp
 import aiofiles
 import psutil
+
+CMS_URL = os.environ['CMS_URL']
 
 
 class DownloadFromCMS(web.View):
     """
     Прокси. Запрашивает файл из CMS и сохранет его для nginx локально.
     """
-    url = 'http://cms.cdn.sonm.soft-way.biz/asset/%s/'
+    url = CMS_URL + '/asset/%s/'
 
     async def get(self):
         uuid = self.request.match_info['uuid']
