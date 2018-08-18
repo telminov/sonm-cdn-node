@@ -17,6 +17,7 @@ RUN apt-get install -y \
 
 
 ENV PYTHONUNBUFFERED 1
+RUN mkdir -p /data/asset/
 RUN mkdir /opt/app
 WORKDIR /opt/app
 
