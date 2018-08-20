@@ -1,2 +1,2 @@
 # CDN node
-Узел CDN. Nginx - который отдает файлы. Python script - обновляет содержимое узла.
+The CDN node. Nginx-which gives files. The Python script updates the content of the site.
